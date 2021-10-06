@@ -20,6 +20,7 @@
             <th>name</th>
             <th>text</th>
             <th>address</th>
+            <th>Тип</th>
             <th></th>
         </tr>
     </thead>
@@ -30,6 +31,7 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
+                <td>${accident.type.name}</td>
                 <td><a href="<c:url value='/update?id=${accident.id}'/>">Изменить инцидент</a></td>
             </tr>
         </c:forEach>
