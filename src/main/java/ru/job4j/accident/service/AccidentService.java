@@ -14,11 +14,15 @@ public class AccidentService {
         this.accidentMem = accidentMem;
     }
 
-    public void addAccident(Accident accident) {
-        accidentMem.addAccident(accident);
+    public void saveAccident(Accident accident) {
+        accidentMem.saveAccident(accident);
     }
 
     public List<Accident> getAllAccidents() {
         return accidentMem.getAllAccidents();
+    }
+
+    public Accident getAccidentById(int id) {
+        return accidentMem.getAccidentById(id);
     }
 }
