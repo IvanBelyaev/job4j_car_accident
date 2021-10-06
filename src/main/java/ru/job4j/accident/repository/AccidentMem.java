@@ -11,13 +11,14 @@ import java.util.Map;
 @Repository
 public class AccidentMem {
     private Map<Integer, Accident> accidents = new HashMap<>();
+    private int id = 1;
 
     public AccidentMem() {
-        Accident accidentOne = new Accident(1, "First accident", "text_1", "address_1");
-        Accident accidentTwo = new Accident(2, "Second accident", "text_2", "address_2");
-        Accident accidentThree = new Accident(3, "Third accident", "text_3", "address_3");
-        Accident accidentFour = new Accident(4, "Fourth accident", "text_4", "address_4");
-        Accident accidentFive = new Accident(5, "Fifth accident", "text_5", "address_5");
+        Accident accidentOne = new Accident("First accident", "text_1", "address_1");
+        Accident accidentTwo = new Accident("Second accident", "text_2", "address_2");
+        Accident accidentThree = new Accident("Third accident", "text_3", "address_3");
+        Accident accidentFour = new Accident("Fourth accident", "text_4", "address_4");
+        Accident accidentFive = new Accident("Fifth accident", "text_5", "address_5");
         addAccident(accidentOne);
         addAccident(accidentTwo);
         addAccident(accidentThree);
@@ -26,7 +27,8 @@ public class AccidentMem {
     }
 
     public void addAccident(Accident accident) {
-        accidents.put(accident.getId(), accident);
+        accident.setId(id);
+        accidents.put(id++, accident);
     }
 
     public List<Accident> getAllAccidents() {

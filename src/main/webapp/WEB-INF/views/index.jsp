@@ -8,7 +8,8 @@
     <title>Accident</title>
 </head>
 <body>
-Hello : Accident
+
+<a href="<c:url value='/create'/>">Добавить инцидент</a>
 
 <br><br>
 
