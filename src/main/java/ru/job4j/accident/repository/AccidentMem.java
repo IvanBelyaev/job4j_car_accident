@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
-    private Map<Integer, Accident> accidents = new HashMap<>();
-    private int nextId = 1;
+    private Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private AtomicInteger nextId = new AtomicInteger(1);
 
     public AccidentMem() {
         Accident accidentOne = new Accident("First accident", "text_1", "address_1");
@@ -28,11 +30,9 @@ public class AccidentMem {
 
     public void saveAccident(Accident accident) {
         if (accident.getId() == 0) {
-            accident.setId(nextId);
-            accidents.put(nextId++, accident);
-        } else {
-            accidents.put(accident.getId(), accident);
+            accident.setId(nextId.getAndIncrement());
         }
+        accidents.put(accident.getId(), accident);
     }
 
     public List<Accident> getAllAccidents() {
