@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/IvanBelyaev/job4j_car_accident.svg?branch=main)](https://app.travis-ci.com/IvanBelyaev/job4j_car_accident)
+
 # Проект - Автонарушители
 
 Описание:
