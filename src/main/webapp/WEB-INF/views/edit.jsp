@@ -35,6 +35,22 @@
             </td>
         </tr>
         <tr>
+            <td>Статьи:</td>
+            <td>
+                <select name="rIds" multiple>
+                    <c:forEach var="rule" items="${rules}" >
+                        <c:set var="contains" value="false" />
+                        <c:forEach var="item" items="${accident.rules}">
+                            <c:if test="${item eq rule}">
+                                <c:set var="contains" value="true" />
+                            </c:if>
+                        </c:forEach>
+                        <option value="${rule.id}" <c:if test="${contains}">selected</c:if>>${rule.name}</option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>
         </tr>
     </table>
