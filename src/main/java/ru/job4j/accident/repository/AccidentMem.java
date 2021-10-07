@@ -5,15 +5,16 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
-    private Map<Integer, Accident> accidents = new HashMap<>();
-    private Map<Integer, AccidentType> types = new HashMap<>();
-    private int nextId = 1;
+    private Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
+    private Map<Integer, AccidentType> types = new ConcurrentHashMap<>();
+    private AtomicInteger nextId = new AtomicInteger(1);
 
     public AccidentMem() {
         AccidentType accidentTypeOne = AccidentType.of(1, "Две машины");
@@ -40,11 +41,9 @@ public class AccidentMem {
         AccidentType accidentType = types.get(accidentTypeId);
         accident.setType(accidentType);
         if (accident.getId() == 0) {
-            accident.setId(nextId);
-            accidents.put(nextId++, accident);
-        } else {
-            accidents.put(accident.getId(), accident);
+            accident.setId(nextId.getAndIncrement());
         }
+        accidents.put(accident.getId(), accident);
     }
 
     public List<Accident> getAllAccidents() {
