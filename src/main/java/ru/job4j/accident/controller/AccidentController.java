@@ -12,10 +12,7 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class AccidentController {
@@ -47,18 +44,8 @@ public class AccidentController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        String[] rIds = req.getParameterValues("rIds");
-        if (rIds == null) {
-            rIds = new String[0];
-        }
-        Set<Rule> rules = new HashSet<>();
-        for (String ruleId : rIds) {
-            Rule rule = new Rule();
-            rule.setId(Integer.parseInt(ruleId));
-            rules.add(rule);
-        }
-        accident.setRules(rules);
-        accidentService.saveAccident(accident);
+        String[] ruleIds = req.getParameterValues("rIds");
+        accidentService.saveAccident(accident, ruleIds);
         return "redirect:/";
     }
 }

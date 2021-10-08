@@ -6,7 +6,9 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.AccidentMem;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AccidentService {
@@ -16,7 +18,17 @@ public class AccidentService {
         this.accidentMem = accidentMem;
     }
 
-    public void saveAccident(Accident accident) {
+    public void saveAccident(Accident accident, String[] ruleIds) {
+        Set<Rule> rules = new HashSet<>();
+        for (String id : ruleIds) {
+            rules.add(accidentMem.getRuleById(Integer.parseInt(id)));
+        }
+        accident.setRules(rules);
+
+        int accidentTypeId = accident.getType().getId();
+        AccidentType accidentType = accidentMem.getAccidentTypeById(accidentTypeId);
+        accident.setType(accidentType);
+
         accidentMem.saveAccident(accident);
     }
 

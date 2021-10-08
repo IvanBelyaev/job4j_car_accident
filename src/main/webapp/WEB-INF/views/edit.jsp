@@ -37,7 +37,7 @@
         <tr>
             <td>Статьи:</td>
             <td>
-                <select name="rIds" multiple>
+                <select name="rIds" multiple required>
                     <c:forEach var="rule" items="${rules}" >
                         <c:set var="contains" value="false" />
                         <c:forEach var="item" items="${accident.rules}">

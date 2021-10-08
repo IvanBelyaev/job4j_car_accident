@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class AccidentMem {
@@ -54,15 +53,6 @@ public class AccidentMem {
     }
 
     public void saveAccident(Accident accident) {
-        int accidentTypeId = accident.getType().getId();
-        AccidentType accidentType = types.get(accidentTypeId);
-        accident.setType(accidentType);
-
-        Set<Rule> rules = accident.getRules().stream()
-                .map(rule -> getRuleById(rule.getId()))
-                .collect(Collectors.toSet());
-        accident.setRules(rules);
-
         if (accident.getId() == 0) {
             accident.setId(nextId.getAndIncrement());
         }
@@ -79,6 +69,10 @@ public class AccidentMem {
 
     public List<AccidentType> getAllAccidentTypes() {
         return new ArrayList<>(types.values());
+    }
+
+    public AccidentType getAccidentTypeById(int id) {
+        return types.get(id);
     }
 
     public List<Rule> getAllRules() {
