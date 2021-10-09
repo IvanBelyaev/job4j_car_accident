@@ -1,10 +1,11 @@
 package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,39 +13,39 @@ import java.util.Set;
 
 @Service
 public class AccidentService {
-    private AccidentMem accidentMem;
+    private AccidentJdbcTemplate accidentJdbcTemplate;
 
-    public AccidentService(AccidentMem accidentMem) {
-        this.accidentMem = accidentMem;
+    public AccidentService(AccidentJdbcTemplate accidentJdbcTemplate) {
+        this.accidentJdbcTemplate = accidentJdbcTemplate;
     }
 
     public void saveAccident(Accident accident, String[] ruleIds) {
         Set<Rule> rules = new HashSet<>();
         for (String id : ruleIds) {
-            rules.add(accidentMem.getRuleById(Integer.parseInt(id)));
+            rules.add(accidentJdbcTemplate.getRuleById(Integer.parseInt(id)));
         }
         accident.setRules(rules);
 
         int accidentTypeId = accident.getType().getId();
-        AccidentType accidentType = accidentMem.getAccidentTypeById(accidentTypeId);
+        AccidentType accidentType = accidentJdbcTemplate.getAccidentTypeById(accidentTypeId);
         accident.setType(accidentType);
 
-        accidentMem.saveAccident(accident);
+        accidentJdbcTemplate.saveAccident(accident);
     }
 
     public List<Accident> getAllAccidents() {
-        return accidentMem.getAllAccidents();
+        return accidentJdbcTemplate.getAllAccidents();
     }
 
     public Accident getAccidentById(int id) {
-        return accidentMem.getAccidentById(id);
+        return accidentJdbcTemplate.getAccidentById(id);
     }
 
     public List<AccidentType> getAllAccidentTypes() {
-        return accidentMem.getAllAccidentTypes();
+        return accidentJdbcTemplate.getAllAccidentTypes();
     }
 
     public List<Rule> getAllRules() {
-        return accidentMem.getAllRules();
+        return accidentJdbcTemplate.getAllRules();
     }
 }

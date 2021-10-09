@@ -6,6 +6,12 @@ sudo: false
 jdk:
   - openjdk11
 
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database auto_crash;' -U postgres
+
 install:
   - mvn install -P travis -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
