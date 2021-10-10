@@ -8,10 +8,13 @@
     <title>Accident</title>
 </head>
 <body>
-
-<a href="<c:url value='/create'/>">Добавить инцидент</a>
-
-<br><br>
+<div>
+    Login as: ${user.username}
+</div>
+<br>
+<div>
+    <a href="<c:url value='/create'/>">Добавить инцидент</a>
+</div>
 
 <table class="table">
     <thead>
