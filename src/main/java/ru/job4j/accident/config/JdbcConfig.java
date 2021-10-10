@@ -31,5 +31,4 @@ public class JdbcConfig {
     public JdbcTemplate jdbc(DataSource ds) {
         return new JdbcTemplate(ds);
     }
-
 }
